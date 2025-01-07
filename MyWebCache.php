@@ -2,64 +2,7 @@
 
 class MyWebCache
 {
-  /*
-  Usage:
-  MyWebCache::$cachetime = ... // cache life time in seconds, defaults to 4h
-  MyWebCache::$cacheFolder = ... // absolute path of folder cache files should be written to.
-                                    Will be created, if it does not exist, and permissions permit it.
-                                    Defaults to _DIR__ . '/cache'
-  MyWebCache::setKey(...) // set they key for the current request.
-                             Defaults to current URL including GET parameters (REQUEST_URI).
-                             Must not contain any newlines!
-                             You may wanto to set this yourself, if you use POST.
-  MyWebCache::setKey(...) // get the current key (see above).
-  
-  MyWebCache::tryGetFromCache() // attempt to read results from cache. Will write results to response
-                                   (headers not included) and exit the script, if a matching cache entry
-                                   is found. Otherwise the script just continues, and all outpout will be
-                                   buffered from here on.
-  MyWebCache::writeCache() // writes all buffered outout to cache and flushes the output buffer.
-  MyWebCache::cleanupThisCache() // will delete the cache file matching the current key,
-                                    regardless of its life time, if it exists.
-  MyWebCache::cleanupCache() // will expire all cache files that have exceeded teir life time.
-
-  
-  Typical program flow:
-  1. write headers
-  2. MyWebCache::tryGetFromCache()
-  3. calculate and write response
-  4. MyWebCache::writeCache()
-  
-  As any hash, MD5 can produce the same value for different inputs. Therefore the key
-  is written to the last line of the cache file.
-  Up to 10 cache files may be created for the same MD5 hash, if this limit is exceeded,
-  caching will not happen.
-  
-  For testing on PHP Sandbox:
-    MyWebCache::$cacheFolder = "/tmp/cache";
-    //MyWebCache::$cachetime = 1;
-    MyWebCache::setKey("haha");
-    MyWebCache::tryGetFromCache();
-    echo "haha";
-    MyWebCache::writeCache();
-    //MyWebCache::cleanupCache();
-    //MyWebCache::cleanupThisCache();
-    $files = glob("/tmp/cache/*");
-        foreach($files as $file)
-        {
-          echo "\r\n" . $file;
-        }
-    //echo file_get_contents("/tmp/cache/4e4d6c332b6fe62a63afe56171fd3725-000");
-  
-  // $cachefile is based on the page and all its paramaters
-  //   this is too long for file names (limit is 255 bytes), so we use:
-  // $cachefileMD5 contains the MD5 hash of $cachefile. This serves as the file name.
-  // The cache file will contain the output and a last line that contains $cachefile.
-  //   This way, we can be sure to pick the correct file later on.
-  
-  */
-
-  // Set lifetime (seconds)
+  // lifetime (seconds)
   public static $cachetime = 4 * 60 * 60; // 4h
 
   public static $cacheFolder = __DIR__ . '/cache';
