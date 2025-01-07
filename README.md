@@ -1,8 +1,8 @@
 # php-cache
 A cache class for PHP web pages.
 
-Usage:
---
+## Usage
+<code>
 MyWebCache::$cachetime = ... // cache life time in seconds, defaults to 4h
 MyWebCache::$cacheFolder = ... // absolute path of folder cache files should be written to.
                                   Will be created, if it does not exist, and permissions permit it.
@@ -12,7 +12,7 @@ MyWebCache::setKey(...) // set they key for the current request.
                            Must not contain any newlines!
                            You may wanto to set this yourself, if you use POST.
 MyWebCache::setKey(...) // get the current key (see above).
-
+<br/>
 MyWebCache::tryGetFromCache() // attempt to read results from cache. Will write results to response
                                  (headers not included) and exit the script, if a matching cache entry
                                  is found. Otherwise the script just continues, and all outpout will be
@@ -21,10 +21,10 @@ MyWebCache::writeCache() // writes all buffered outout to cache and flushes the 
 MyWebCache::cleanupThisCache() // will delete the cache file matching the current key,
                                   regardless of its life time, if it exists.
 MyWebCache::cleanupCache() // will expire all cache files that have exceeded teir life time.
+</cocde>
 
+## Typical program flow:
 
-Typical program flow:
---
 1. write headers
 2. MyWebCache::tryGetFromCache()
 3. calculate and write response
@@ -36,8 +36,8 @@ As any hash, MD5 can produce the same value for different inputs. Therefore the 
 is written to the last line of the cache file.
 Up to 10 cache files may be created for the same MD5 hash. If this limit is exceeded, the output will not be cached.
 
-Testing on https://onlinephp.io/
---
+## Testing on https://onlinephp.io/
+<code>
 MyWebCache::$cacheFolder = "/tmp/cache";
 //MyWebCache::$cachetime = 1;
 MyWebCache::setKey("haha");
@@ -52,4 +52,4 @@ $files = glob("/tmp/cache/*");
       echo "\r\n" . $file;
     }
 //echo file_get_contents(glob("/tmp/cache/*")[0]);
-
+</code>
